@@ -9,7 +9,13 @@ const db: any = {};
 initialize();
 
 async function initialize() {
-  const { host, port, user, password, database } = config.database;
+  // use environment variables in production, fall back to config.json for local dev
+  const host = process.env.DB_HOST || config.database.host;
+  const port = Number(process.env.DB_PORT) || config.database.port;
+  const user = process.env.DB_USER || config.database.user;
+  const password = process.env.DB_PASSWORD || config.database.password;
+  const database = process.env.DB_NAME || config.database.database;
+
   const connection = await mysql.createConnection({
     host,
     port,

@@ -12,10 +12,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-// allow cors requests from any origin and with credentials
+// allow cors requests from configured origin (env var in production, any origin in dev)
+const corsOrigin = process.env.CORS_ORIGIN;
 app.use(
   cors({
-    origin: (origin, callback) => callback(null, true),
+    origin: corsOrigin
+      ? corsOrigin
+      : (origin, callback) => callback(null, true),
     credentials: true,
   }),
 );

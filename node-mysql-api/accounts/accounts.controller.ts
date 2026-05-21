@@ -251,9 +251,14 @@ function _delete(req: any, res: any, next: any) {
 }
 
 function setTokenCookie(res: any, token: any) {
-  const cookieOptions = {
+  const cookieOptions: any = {
     httpOnly: true,
     expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
   };
+  // secure flag required in production (HTTPS only)
+  if (process.env.COOKIE_SECURE === 'true') {
+    cookieOptions.secure = true;
+    cookieOptions.sameSite = 'none';
+  }
   res.cookie("refreshToken", token, cookieOptions);
 }

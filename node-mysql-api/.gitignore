@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Sensitive config - NEVER commit these
+config.json
+.env
+
+# Build output
+dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
