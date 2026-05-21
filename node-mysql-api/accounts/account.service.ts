@@ -91,7 +91,12 @@ async function register(params: any, origin: any) {
 
   await account.save();
 
-  await sendVerificationEmail(account, origin);
+  try {
+    await sendVerificationEmail(account, origin);
+  } catch (emailError) {
+    console.error('Email send failed:', emailError);
+    // Don't throw - account is created, email can be resent
+  }
 }
 
 async function verifyEmail({ token }: any) {
