@@ -10,7 +10,8 @@ export default async function sendEmail({
   // Use Mailtrap API if available (works on Render free tier which blocks SMTP ports)
   const mailtrapToken = process.env.MAILTRAP_TOKEN;
   if (mailtrapToken) {
-    const response = await fetch('https://send.api.mailtrap.io/api/send', {
+    const inboxId = process.env.MAILTRAP_INBOX_ID || '4648842';
+    const response = await fetch(`https://sandbox.api.mailtrap.io/api/send/${inboxId}`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${mailtrapToken}`,
